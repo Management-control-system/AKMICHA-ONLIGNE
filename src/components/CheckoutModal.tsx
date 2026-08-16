@@ -19,22 +19,28 @@ import { ALGERIAN_WILAYAS, getWilayaDeliveryCost } from '../data/wilayas';
 import { formatPrice } from '../data/currencies';
 
 interface CheckoutModalProps {
+  isOpen: boolean;
   cart: CartItem[];
   currency: CurrencyCode;
   discountAmount: number;
   couponCode?: string;
   onClose: () => void;
-  onOrderComplete: (newOrder: Order) => void;
+  onOrderCreated?: (newOrder: Order) => void;
+  onOrderComplete?: (newOrder: Order) => void;
 }
 
 export const CheckoutModal: React.FC<CheckoutModalProps> = ({
+  isOpen,
   cart,
   currency,
   discountAmount,
   couponCode,
   onClose,
+  onOrderCreated,
   onOrderComplete,
 }) => {
+  if (!isOpen) return null;
+
   const [step, setStep] = useState<'shipping' | 'payment' | 'success'>('shipping');
 
   // Customer Shipping Info
@@ -124,7 +130,11 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
         });
       } catch (e) {}
 
-      onOrderComplete(newOrder);
+      if (onOrderCreated) {
+        onOrderCreated(newOrder);
+      } else if (onOrderComplete) {
+        onOrderComplete(newOrder);
+      }
     }, 1000);
   };
 

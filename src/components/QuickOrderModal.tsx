@@ -22,7 +22,8 @@ interface QuickOrderModalProps {
   initialMeters?: number;
   currency: CurrencyCode;
   onClose: () => void;
-  onConfirmOrder: (order: Order) => void;
+  onConfirmOrder?: (order: Order) => void;
+  onOrderCreated?: (order: Order) => void;
 }
 
 export const QuickOrderModal: React.FC<QuickOrderModalProps> = ({
@@ -33,6 +34,7 @@ export const QuickOrderModal: React.FC<QuickOrderModalProps> = ({
   currency,
   onClose,
   onConfirmOrder,
+  onOrderCreated,
 }) => {
   if (!isOpen || !fabric) return null;
 
@@ -136,7 +138,11 @@ export const QuickOrderModal: React.FC<QuickOrderModalProps> = ({
     };
 
     setTimeout(() => {
-      onConfirmOrder(newOrder);
+      if (onOrderCreated) {
+        onOrderCreated(newOrder);
+      } else if (onConfirmOrder) {
+        onConfirmOrder(newOrder);
+      }
       setIsSubmitting(false);
       setOrderSuccess(newOrder);
     }, 400);
