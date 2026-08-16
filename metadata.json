@@ -1,0 +1,6 @@
+{
+  "name": "أقمشة أونلاين | Akmicha Online",
+  "description": "منصة أقمشة أونلاين لبيع الأقمشة الفاخرة بالقص الدقيق للأمتار، وفلترة الأنواع والألوان، وحساب التكلفة الفوري، مع السلة، الدفع الإلكتروني والدفع عند الاستلام، وتتبع الطلبات وتحديث المخزون التلقائي.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
